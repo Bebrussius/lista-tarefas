@@ -7,16 +7,27 @@ class Tarefa {
         this.description = description;
     }
 
-    static listarTarefas() {
+    static async listarTarefas() {
         const db = require("./dataBase");
-        let tarefas = db.query("SELECT * FROM tarefas");
+        const tarefas = await db.query("SELECT * FROM tarefa");
         return tarefas;
     }
 
-    salvar() {
+    async salvar() {
         const db = require("./dataBase");
-        let resp = db.query("INSERT INTO tarefa (title) VALUES ('$(this.title), ");
-        console.log(resp);
+        const sql = `INSERT INTO tarefa (tarefa) VALUES ('${this.title}')`;
+        await db.query(sql);
+        console.log("Tarefa salva com sucesso!");
+    }
+
+    static async deleteTarefa(id){
+        const db = require('./dataBase');
+        if(await db.query("DELETE FROM tarefa WHERE id = "+id)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
 

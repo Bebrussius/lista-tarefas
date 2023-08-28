@@ -20,8 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public")); 
 
 //Layout
-app.use(expressLayouts);
-app.set('layout', '.layouts/default/index');
 app.set('view engine', 'ejs');
 
 //Rotas
@@ -44,3 +42,7 @@ function authenticationMiddleware(req, res, next) {
     if (req.isAuthenticated()) return next();
     res.redirect('/login?fail=true');
   }
+
+app.get('/tarefas/delete/:id', (req,res) =>{
+    tarefaController.deleteTarefa(req, res);
+})
